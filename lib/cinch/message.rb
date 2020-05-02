@@ -10,6 +10,14 @@ module Cinch
   # At the same time, it allows **responding** to messages, which
   # means sending messages to either users or channels.
   class Message
+    # The regular expression used to parse raw messages from the server
+    MESSAGE_PATTERN = /
+      (?:^@(?<tags>\S+)\s+)?
+      (?::(?<prefix>\S+)\s+)?
+      (?<command>\S+)\s+
+      (?<raw_params>.*)
+    /x
+
     # @return [String]
     attr_reader :raw
 
@@ -97,7 +105,7 @@ module Cinch
     # @api private
     # @return [void]
     def parse
-      match = @raw.match(/(?:^@(?<tags>\S+)\s+)?(?::(?<prefix>\S+)\s+)?(?<command>\S+)\s+(?<raw_params>.*)/)
+      match = @raw.match(MESSAGE_PATTERN)
 
       tags = match[:tags]
       @prefix = match[:prefix]
