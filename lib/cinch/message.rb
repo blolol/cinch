@@ -21,7 +21,7 @@ module Cinch
 
     # @return [Array<String>]
     attr_reader :params
-    
+
     # @return [Hash]
     attr_reader :tags
 
@@ -97,8 +97,12 @@ module Cinch
     # @api private
     # @return [void]
     def parse
-      match = @raw.match(/(?:^@([^:]+))?(?::?(\S+) )?(\S+)(.*)/)
-      tags, @prefix, @command, raw_params = match.captures
+      match = @raw.match(/(?:^@(?<tags>\S+)\s+)?(?::(?<prefix>\S+)\s+)?(?<command>\S+)\s+(?<raw_params>.*)/)
+
+      tags = match[:tags]
+      @prefix = match[:prefix]
+      @command = match[:command]
+      raw_params = match[:raw_params]
 
       if @bot.irc.network.ngametv?
         if @prefix != "ngame"
@@ -270,14 +274,14 @@ module Cinch
 
       return params
     end
-    
+
     def parse_tags(raw_tags)
       return {} if raw_tags.nil?
-      
+
       def to_symbol(string)
         return string.gsub(/-/, "_").downcase.to_sym
       end
-      
+
       tags = {}
       raw_tags.split(";").each do |tag|
         tag_name, tag_value = tag.split("=")
