@@ -115,7 +115,7 @@ module Cinch
           message = format_message(message, event)
 
           next if message.nil?
-          @output.puts message.encode("locale", {:invalid => :replace, :undef => :replace})
+          @output.puts message.encode("locale", invalid: :replace, undef: :replace)
         end
       end
     end
