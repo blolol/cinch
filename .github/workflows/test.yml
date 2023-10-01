@@ -9,7 +9,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        ruby: ['2.7', '3.2']
+        ruby: ['3.2']
     steps:
       - name: Checkout
         uses: actions/checkout@v4
