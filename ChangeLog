@@ -1,3 +1,12 @@
+* Cinch 2.3.5, 30 September 2023
+  - This fork of Cinch is now maintained by the Blolol organization. The README and LICENSE have
+    been updated accordingly.
+  - Cinch is now automatically tested against Ruby 3.2 using GitHub Actions.
+  - Gem releases are now published to GitHub's Ruby gem package repository, accessible at
+    https://github.com/blolol/cinch/pkgs/rubygems/cinch.
+  - Fix Ruby 2.7 keyword argument deprecation warnings (0b937db).
+  - Correctly parse messages without prefixes (fa4b23d).
+
 * Cinch 2.3.2, 25 April 2016
   - Fix exception and premature timeouts in DCC send
 
