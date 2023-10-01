@@ -1,15 +1,14 @@
-Cinch - The IRC Bot Building Framework
-=====================================
+Cinch
+=====
 
-**The Cinch project is no longer maintained. No new features will be
-added, and no bugs will be fixed. The repository has been archived. If
-you wish to continue developing Cinch, please fork the project. I am
-not accepting new maintainers for this project.**
+**This is a fork of [cinchrb/cinch](https://github.com/cinchrb/cinch), which is no
+longer maintained. Ruby gem releases are [published to GitHub Packages](#bundler)
+to avoid conflicting with the existing RubyGems.org gem.**
 
 Description
 -----------
 
-Cinch is an IRC Bot Building Framework for quickly creating IRC bots in
+Cinch is an IRC bot framework for quickly creating IRC bots in
 Ruby with minimal effort. It provides a simple interface based on plugins and
 rules. It's as easy as creating a plugin, defining a rule, and watching your
 profits flourish.
@@ -17,26 +16,25 @@ profits flourish.
 Cinch will do all of the hard work for you, so you can spend time creating cool
 plugins and extensions to wow your internet peers.
 
-For general support, join #cinch channel on Freenode server (irc://irc.freenode.org/cinch) – but
-please don't bring any bots.
-
 Installation
 ------------
 
-### RubyGems
+### Bundler
 
-You can install the latest Cinch gem using RubyGems
+You can add Blolol's Cinch fork as a dependency to your project using [Bundler](https://bundler.io).
 
-```
-gem install cinch
+```rb
+source 'https://rubygems.pkg.github.com/blolol' do
+  gem 'cinch', '~> 2.3.5'
+end
 ```
 
 ### GitHub
 
-Alternatively you can check out the latest code directly from Github
+Alternatively, you can check out the latest code directly from GitHub.
 
 ```
-git clone http://github.com/cinchrb/cinch.git
+git clone http://github.com/blolol/cinch.git
 ```
 
 Example
