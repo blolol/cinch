@@ -24,27 +24,31 @@ module Cinch
     # Sends a PRIVMSG to the target.
     #
     # @param [#to_s] text the message to send
-    # @param [Boolean] notice Use NOTICE instead of PRIVMSG?
+    # @param [Boolean] notice use NOTICE instead of PRIVMSG?
+    # @param [String] as use RELAYMSG with this spoofed nick
     # @return [void]
     # @see #safe_msg
     # @note The aliases `msg` and `privmsg` are deprecated and will be
     #   removed in a future version.
-    def send(text, notice = false)
+    def send(text, notice = false, as: nil)
       # TODO deprecate `notice` argument, put splitting into own
       # method
       text = text.to_s
       split_start = @bot.config.message_split_start || ""
       split_end   = @bot.config.message_split_end   || ""
-      command = notice ? "NOTICE" : "PRIVMSG"
+      command = notice ? "NOTICE" : (as ? "RELAYMSG" : "PRIVMSG")
       prefix = ":#{@bot.mask} #{command} #{@name} :"
+      args = [@name, as].compact.join(" ")
 
       text.lines.map(&:chomp).each do |line|
         splitted = split_message(line, prefix, split_start, split_end)
 
         splitted[0, (@bot.config.max_messages || splitted.size)].each do |string|
-          @bot.irc.send("#{command} #@name :#{string}")
+          @bot.irc.send("#{command} #{args} :#{string}")
         end
       end
+
+      nil
     end
     alias_method :msg, :send # deprecated
     alias_method :privmsg, :send # deprecated
@@ -75,8 +79,8 @@ module Cinch
     # @return (see #send)
     # @param (see #send)
     # @see #send
-    def safe_send(text, notice = false)
-      send(Cinch::Helpers.sanitize(text), notice)
+    def safe_send(text, notice = false, as: nil)
+      send(Cinch::Helpers.sanitize(text), notice, as: as)
     end
     alias_method :safe_msg, :safe_send # deprecated
     alias_method :safe_privmsg, :safe_msg # deprecated
@@ -109,11 +113,15 @@ module Cinch
     # Invoke an action (/me) in/to the target.
     #
     # @param [#to_s] text the message to send
+    # @param [String] as use RELAYMSG with this spoofed nick
     # @return [void]
     # @see #safe_action
-    def action(text)
+    def action(text, as: nil)
+      command = as ? "RELAYMSG" : "PRIVMSG"
+      args = [@name, as].compact.join(" ")
       line = text.to_s.each_line.first.chomp
-      @bot.irc.send("PRIVMSG #@name :\001ACTION #{line}\001")
+      @bot.irc.send("#{command} #{args} :\001ACTION #{line}\001")
+      nil
     end
 
     # Like {#action}, but remove any non-printable characters from
@@ -128,8 +136,8 @@ module Cinch
     # @param (see #action)
     # @return (see #action)
     # @see #action
-    def safe_action(text)
-      action(Cinch::Helpers.sanitize(text))
+    def safe_action(text, as: nil)
+      action(Cinch::Helpers.sanitize(text), as: as)
     end
 
     # Send a CTCP to the target.
