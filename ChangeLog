@@ -1,9 +1,18 @@
+* Cinch 2.4.0, 20 November 2024
+  - Add support for spoofing nicknames using the RELAYMSG command. To do
+    so, use the optional `as` keyword argument on `Target#send`,
+    `Target#safe_send`, `Target#action` and `Target#safe_action`. The
+    IRCd must support the `draft/relaymsg` capability, and, depending on
+    its implementation, may require the bot to be an IRC operator. For
+    more on the RELAYMSG draft spec, see this IRCv3 spec pull request:
+    https://github.com/ircv3/ircv3-specifications/pull/417
+
 * Cinch 2.3.5, 30 September 2023
-  - This fork of Cinch is now maintained by the Blolol organization. The README and LICENSE have
-    been updated accordingly.
+  - This fork of Cinch is now maintained by the Blolol organization. The
+    README and LICENSE have been updated accordingly.
   - Cinch is now automatically tested against Ruby 3.2 using GitHub Actions.
-  - Gem releases are now published to GitHub's Ruby gem package repository, accessible at
-    https://github.com/blolol/cinch/pkgs/rubygems/cinch.
+  - Gem releases are now published to GitHub's Ruby gem package repository,
+    accessible at https://github.com/blolol/cinch/pkgs/rubygems/cinch.
   - Fix Ruby 2.7 keyword argument deprecation warnings (0b937db).
   - Correctly parse messages without prefixes (fa4b23d).
 
