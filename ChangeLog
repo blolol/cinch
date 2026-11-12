@@ -1,3 +1,13 @@
+* Cinch 2.4.1, 11 November 2026
+  - Cinch now supports Server Name Indication (SNI) during the TLS
+    handshake, using the bot's configured `server`. This allows Cinch
+    to connect to servers that host several hostnames on one IP
+    address, or that sit behind a TLS-terminating proxy, and use SNI
+    to pick the correct TLS certificate. Before this change, Cinch
+    couldn't connect to servers that require SNI, failing with
+    "SSL_connect ... unexpected eof". Servers that ignore SNI are
+    unaffected.
+
 * Cinch 2.4.0, 20 November 2024
   - Add support for spoofing nicknames using the RELAYMSG command. To do
     so, use the optional `as` keyword argument on `Target#send`,
