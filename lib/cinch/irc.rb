@@ -96,8 +96,9 @@ module Cinch
       end
       @bot.loggers.info "Using SSL with #{@bot.config.server}:#{@bot.config.port}"
 
-      @socket      = OpenSSL::SSL::SSLSocket.new(socket, ssl_context)
-      @socket.sync = true
+      @socket          = OpenSSL::SSL::SSLSocket.new(socket, ssl_context)
+      @socket.sync     = true
+      @socket.hostname = @bot.config.server
       @socket.connect
     end
 
