@@ -408,7 +408,7 @@ module Cinch
 
     # @note The aliases `msg` and `privmsg` are deprecated and will be
     #   removed in a future version.
-    def send(text, notice = false)
+    def send(text, notice = false, as: nil)
       # TODO deprecate 'notice' argument
       text = text.to_s
       if @modes["c"]
@@ -416,7 +416,7 @@ module Cinch
         # allow colors.
         text = Cinch::Formatting.unformat(text)
       end
-      super(text, notice)
+      super(text, notice, as: as)
     end
     alias_method :msg, :send # deprecated
     alias_method :privmsg, :send # deprecated
