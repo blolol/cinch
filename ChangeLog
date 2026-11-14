@@ -1,3 +1,10 @@
+* Cinch 2.4.2, 13 November 2026
+  - Fix `Channel#send` and `Channel#safe_send` raising "wrong number of
+    arguments (given 3, expected 1..2)". `Channel#send` overrides
+    `Target#send` but didn't accept the `as` keyword argument added in
+    2.4.0, which `Target#safe_send` always passes. Passing `as` to
+    `Channel#send` now sends a RELAYMSG, instead of a NOTICE.
+
 * Cinch 2.4.1, 11 November 2026
   - Cinch now supports Server Name Indication (SNI) during the TLS
     handshake, using the bot's configured `server`. This allows Cinch
